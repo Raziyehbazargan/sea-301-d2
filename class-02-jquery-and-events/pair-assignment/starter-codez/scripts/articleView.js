@@ -4,10 +4,25 @@ var articleView = {};
 articleView.populateFilters = function() {
   $('article').each(function() {
     if (!$(this).hasClass('template')) {
+<<<<<<< HEAD
+=======
+      // DONE: We need to take every author name from the page, and make it an option in the Author filter.
+      //       To do so, Build an `option` DOM element that we can append to the author select box.
+      //       Start by grabbing the author's name from `this` article element, and then use that bit of
+      //       text to create the option tag (in a variable named `optionTag`),
+      //       that we can append to the #author-filter select element.
+      //       YAY, DOM manipulation!
+>>>>>>> 739641349736dde2fb29a7281d7344e7356bf631
       var val = $(this).find('address a').text();
       var optionTag = '<option value="' + val + '">' + val + '</option>';
       $('#author-filter').append(optionTag);
 
+<<<<<<< HEAD
+=======
+      // DONE: Similar to the above, but...
+      //       Avoid duplicates! We don't want to append the category name if the select
+      //       already has this category as an option!
+>>>>>>> 739641349736dde2fb29a7281d7344e7356bf631
       val = $(this).attr('data-category');
       optionTag = '<option value="' + val + '">' + val + '</option>';
       if ($('#category-filter option[value="' + val + '"]').length === 0) {
@@ -21,8 +36,11 @@ articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
     if ($(this).val()) {
       // TODO: If the select box was changed to an option that has a value, we need to hide all the articles,
+<<<<<<< HEAD
       var val = $(this).attr('#author-filter');
       $('article').hide().not('input[value="'+ val +']"');
+=======
+>>>>>>> 739641349736dde2fb29a7281d7344e7356bf631
       //       and then show just the ones that match for the author that was selected.
       //       Use an "attribute selector" to find those articles, and fade them in for the reader.
 
