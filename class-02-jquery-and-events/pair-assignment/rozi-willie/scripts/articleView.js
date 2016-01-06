@@ -7,27 +7,27 @@ articleView.populateFilters = function() {
       var val = $(this).find('address a').text();
       var optionTag = '<option value="' + val + '">' + val + '</option>';
       $('#author-filter').append(optionTag);
+
       val = $(this).attr('data-category');
       optionTag = '<option value="' + val + '">' + val + '</option>';
-      if ($('#category-filter option[value="' + val + '"]').length === 0) {
-        $('#category-filter').append(optionTag);
+        if ($('#category-filter option[value="' + val + '"]').length === 0) {
+          $('#category-filter').append(optionTag);
+        }
       }
-    }
-  });
-};
+    });
+  };
 
 articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
-    if ($(this).val()) {
+    if ($(this).val()) {  //its refer to select element of author name and check if it select tag has a
+      //value in option tag
       $('article').hide();
       $('[data-author="'+ $(this).val() +'"]').show();
-      //       and then show just the ones that match for the author that was selected.
-      //       Use an "attribute selector" to find those articles, and fade them in for the reader.
     } else {
-      // TODO: If the select box was changed to an option that is blank, we should
-      //       show all the articles, except the one article we are using as a template.
+      $('article:not(.template)').show();
     }
     $('#category-filter').val('');
+    $('.template').hide();
   });
 };
 
@@ -35,14 +35,13 @@ articleView.handleCategoryFilter = function() {
   $('#category-filter').on('change',function() {
     if ($(this).val()) {
       $('artcile').hide();
-      var val = $('#category-filter').find('option:selected').text();
-      var val2 = $('data-category').find();
+      $('[data-category="'+ $(this).val() +'"]').show(); //in article.js we add a attr to category part
+    }else{
+      $('artcile:not(.template)').show();
     }
-  })
-  // TODO: Just like we do for #author-filter above, we should handle change events on the #category-filter element.
-  //       When an option with a value is selected, hide all the articles, then reveal the matches.
-  //       When the blank (default) option is selected, show all the articles, except for the template.
-    // $('#author-filter').val();
+    $('#author-filter').val('');
+    $('.template').hide();
+  });
 };
 
 articleView.handleMainNav = function() {
