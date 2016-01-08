@@ -11,24 +11,13 @@
     <link rel="stylesheet" href="styles/modules.css">
 
     <!--
-      TODO: Add a script tag to hold the Handlebars template.
-        - Be sure to give it a meaningful id attribute.
+      TODO: Add a script tag to hold the Handlebars template.(did)
+        - Be sure to give it a meaningful id attribute.(did)
         - Move your old template structure to here.
         - Insert placeholder keys.
         - If your object doesn't have values you need yet, you can add those properties in the model.
     -->
     <script id="article-template" type="text/x-handlebars-template">
-      <article class="template template" data-category="{{category}}" data-author="{{author}}">
-        <header>
-          <h1>{{title}}</h1>
-          <div class="byline">
-            By <address><a href="{{authorUrl}}">{{author}}</a></address>
-            {{daysAgo}} days ago <time pubdate datetime="2000-01-01">{{publishOn}}</time>
-          </div>
-        </header>
-        <section class="article-body">{{{body}}}</section>
-        <a href="#" class="read-on">Read on &rarr;</a>
-      </article>
     </script>
 
   </head>
@@ -52,21 +41,21 @@
     </header>
     <main>
 
-    <section id="articles" class="tab-content">
-      <div>
-        <ul id="filters">
-          <li>
-            <select id="author-filter">
-              <option value="{{author}}">--Filter By Author--</option>
-            </select>
-          </li>
-          <li>
-            <select id="category-filter">
-              <option value="{{category}}">-- Filter By Category--</option>
-            </select>
-          </li>
-        </ul>
-      </div>
+      <section id="articles" class="tab-content">
+        <div>
+          <ul id="filters">
+            <li>
+              <select id="author-filter">
+                <option value="">-- Filter by Authors --</option>
+              </select>
+            </li>
+            <li>
+              <select id="category-filter">
+                <option value="">-- Filter by Categories --</option>
+              </select>
+            </li>
+          </ul>
+        </div>
       </section>
 
       <section id="about" class="tab-content">
@@ -82,14 +71,15 @@
           </ul>
         </section>
       </section>
+
+
     </main>
     <footer>
       &copy; 2015 Code Fellows | Static Blog | Happy Ipsum!
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- TODO: Include Handlebars.JS from a CDN -->
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
     <script src="scripts/blogArticles.js"></script>
     <script src="scripts/article.js"></script>
     <script src="scripts/articleView.js"></script>
