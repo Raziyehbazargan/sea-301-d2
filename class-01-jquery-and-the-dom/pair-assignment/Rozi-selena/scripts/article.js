@@ -12,7 +12,7 @@ function Article (opts) {
 
 Article.prototype.toHtml = function() {
   var $newArticle = $('article.template').clone();
-  
+
   $newArticle.data('category', this.category);
   $newArticle.data('title',this.title);
   $newArticle.data('author',this.author);
