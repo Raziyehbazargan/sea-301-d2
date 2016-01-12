@@ -57,10 +57,10 @@ Article.fetchAll = function() {
       type: 'HEAD',
       url:'/data/hackerIpsum.json',
       success:function(data,message,xhr){
-        var eTag = xhr.getResponseHeader('ETag');
+        var eTag = xhr.getResponseHeader('eTag');
         console.log(eTag);
-          if(localStorage.articleETag !== eTag ){
-            localStorage.articleETag = eTag;
+          if(!localStorage.eTag || localStorage.eTag !== eTag ){
+            localStorage.eTag = eTag;
             Article.CheckETags();
         }else {
           Article.loadAll(JSON.parse(localStorage.rawData));
