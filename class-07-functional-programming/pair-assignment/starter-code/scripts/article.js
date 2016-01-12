@@ -1,5 +1,7 @@
 // TODO: Wrap the entire contents of this file in an IIFE.
 // Pass in to the IIFE a module, upon which objects can be attached for later access.
+
+(function(module) {
 function Article (opts) {
   this.author = opts.author;
   this.authorUrl = opts.authorUrl;
@@ -16,7 +18,7 @@ Article.prototype.toHtml = function() {
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
   this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
-  this.body = marked(this.body);
+  // this.body = marked(this.body);
 
   return template(this);
 };
@@ -56,8 +58,9 @@ Article.fetchAll = function() {
 // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
 Article.numWordsAll = function() {
   return Article.all.map(function(article) {
-    var words = article.split(' '); // split using the space char as a delimiter
-    return words.length; // return // Get the total number of words in this article
+    var words = article.body.split(' '); // split using the space char as a delimiter
+    console.log(words.length); // return // Get the total number of words in this article
+    return words.length;
   }) // return a array then we use , .reduce
   .reduce(function(prev, currentEle) {
     return (prev + currentEle)   // Sum up all the values in the collection
@@ -66,15 +69,25 @@ Article.numWordsAll = function() {
 
 // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
 Article.allAuthors = function() {
-  return // Don't forget to read the docs on map and reduce!
+   return Article.all.map(function(article){
+    var authorsNames = article.author;
+    console.log(authorsNames);
+    return authorsNames;
+  })
+  .filter(function(item , index , inputArray) {
+    return inputArray.indexOf(item)==index;  //** read more about it
+  })
 };
 
 Article.numWordsByAuthor = function() {
   // TODO: Transform each author string into an object with 2 properties: One for
   // the author's name, and one for the total number of words across all articles written by the specified author.
   return Article.allAuthors().map(function(author) {
+    console.log(author);
     return {
       // someKey: someValOrFunctionCall().map(...).reduce(...), ...
     }
   })
 };
+module.Article = Article;
+})(window)
