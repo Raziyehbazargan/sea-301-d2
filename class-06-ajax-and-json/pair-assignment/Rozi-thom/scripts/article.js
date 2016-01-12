@@ -41,10 +41,10 @@ Article.loadAll = function(rawData) {
   })
 }
 
-Article.CheckETags = function(){
+Article.getAll = function(){
   $.getJSON('/data/hackerIpsum.json',function(rawData){
   Article.loadAll(rawData);
-  localStorage.rawData = JSON.stringify(rawData);
+  localStorage.rawData = JSON.stringify(rawData); // cache the data , so we don't need to request it ...
   articleView.initIndexPage();
 })
 }
@@ -53,15 +53,16 @@ Article.CheckETags = function(){
 // and process it, then hand off control to the View.
 Article.fetchAll = function() {
   if (localStorage.rawData) {
-    var jqXHR = $.ajax({
-      type: 'HEAD',
+    $.ajax({   //loking for JSON object
+      type: 'HEAD',  //because we just head of data and dont use get because get get all content of data
       url:'/data/hackerIpsum.json',
-      success:function(data,message,xhr){
+      success:function(data,xhr){
+        console.log(xhr);  // want to see what you are getting back from the server?
         var eTag = xhr.getResponseHeader('eTag');
         console.log(eTag);
-          if(!localStorage.eTag || localStorage.eTag !== eTag ){
+          if(!localStorage.eTag || localStorage.eTag !== eTag ){ // !localStorage.eTag  -->if eTag doesn;t exist
             localStorage.eTag = eTag;
-            Article.CheckETags();
+            Article.getAll();
         }else {
           Article.loadAll(JSON.parse(localStorage.rawData));
           articleView.initIndexPage();
@@ -69,6 +70,6 @@ Article.fetchAll = function() {
       }
     });
       }else {
-        Article.CheckETags();
+        Article.getAll();
   }
 }
