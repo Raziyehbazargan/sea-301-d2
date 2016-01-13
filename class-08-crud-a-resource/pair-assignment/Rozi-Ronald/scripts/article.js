@@ -71,8 +71,8 @@
   Article.prototype.updateRecord = function(callback) {
     webDB.execute(
       [
-        'sql':'UPDATE articles WHERE id = ?;',
-        'data':[this.id],
+        'sql':'UPDATE articles SET author = ?  WHERE id = ?;',
+        'data':[this.author , this.id],
       ],
       callback
     );
