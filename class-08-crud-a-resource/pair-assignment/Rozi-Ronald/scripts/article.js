@@ -60,7 +60,7 @@
       [
         {
           'sql' : 'DELETE FROM articles WHERE id =? ;',
-          'data':[this.id];
+          'data':[this.id],
         }
       ],
       callback
@@ -71,8 +71,8 @@
   Article.prototype.updateRecord = function(callback) {
     webDB.execute(
       [
-        'sql':'UPDATE articles SET author = ?  WHERE id = ?;'
-        'data':[this.author , this.id];
+        'sql':'UPDATE articles WHERE id = ?;',
+        'data':[this.id],
       ],
       callback
     );
