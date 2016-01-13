@@ -1,6 +1,5 @@
-// TODO: Wrap the entire contents of this file in an IIFE.
+// did: Wrap the entire contents of this file in an IIFE.
 // Pass in to the IIFE a module, upon which objects can be attached for later access.
-
 (function(module) {
 function Article (opts) {
   this.author = opts.author;
@@ -40,7 +39,7 @@ Article.loadAll = function(rawData) {
 
 // This function will retrieve the data from either a local or remote source,
 // and process it, then hand off control to the View.
-// TODO: Refactor this function, so it accepts an argument of a callback function (likely a view function)
+// did: Refactor this function, so it accepts an argument of a callback function (likely a view function)
 // to execute once the loading of articles is done.
 Article.fetchAll = function(next) {
   if (localStorage.rawData) {
@@ -55,11 +54,10 @@ Article.fetchAll = function(next) {
   }
 };
 
-// TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
+// did: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
 Article.numWordsAll = function() {
   return Article.all.map(function(article) {
     var words = article.body.split(' '); // split using the space char as a delimiter
-    console.log(words.length); // return // Get the total number of words in this article
     return words.length;
   }) // return a array then we use , .reduce
   .reduce(function(prev, currentEle) {
@@ -67,26 +65,44 @@ Article.numWordsAll = function() {
   })
 };
 
-// TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
+
+// did: Chain together a `map` and a `reduce` call to produce an array of unique author names.
 Article.allAuthors = function() {
    return Article.all.map(function(article){
     var authorsNames = article.author;
-    console.log(authorsNames);
     return authorsNames;
   })
   .filter(function(item , index , inputArray) {
     return inputArray.indexOf(item)==index;  //** read more about it
   })
+  //another solution instead of .filter
+  // .reduce(function(uniqueName,name){
+  //   if(uniqueName.indexOf(name)<0){
+  //     uniqueName.push(name);
+  //   }
+  //   return uniqueName;
+  // },[]);
+// })
 };
 
-Article.numWordsByAuthor = function() {
   // TODO: Transform each author string into an object with 2 properties: One for
   // the author's name, and one for the total number of words across all articles written by the specified author.
+Article.numWordsByAuthor = function() {
   return Article.allAuthors().map(function(author) {
-
-    console.log(author);
-    return {
-      // someKey: someValOrFunctionCall().map(...).reduce(...), ...
+    return{
+      name: author,
+      numWords:
+        Article.all
+        .filter(function(article){
+          return article.author === author;
+        })
+        .map(function(article){
+        var words = article.body.split(' ');
+          return words.lenght;
+      })
+        .reduce(function(prev, currentEle) {
+          return (prev + currentEle)   // Sum up all the values in the collection
+      })
     }
   })
 };
