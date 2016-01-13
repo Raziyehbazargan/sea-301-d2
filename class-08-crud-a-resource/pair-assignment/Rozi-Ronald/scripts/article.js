@@ -41,7 +41,7 @@
     );
   };
 
-  // TODO: Insert an article instance into the database:
+  // did: Insert an article instance into the database:
   Article.prototype.insertRecord = function(callback) {
     webDB.execute(
       [
@@ -54,7 +54,7 @@
     );
   };
 
-  // TODO: Delete an article instance from the database:
+  // did: Delete an article instance from the database:
   Article.prototype.deleteRecord = function(callback) {
     webDB.execute(
       [
@@ -67,11 +67,12 @@
     );
   };
 
-  // TODO: Update an article instance, overwriting it's properties into the corresponding record in the database:
+  // did: Update an article instance, overwriting it's properties into the corresponding record in the database:
   Article.prototype.updateRecord = function(callback) {
     webDB.execute(
       [
-        /* ... */
+        'sql':'UPDATE articles SET author = ?  WHERE id = ?;'
+        'data':[this.author , this.id];
       ],
       callback
     );
@@ -84,7 +85,7 @@
     });
   };
 
-  // TODO: Refactor this to check if the database holds any records or not. If the DB is empty,
+  // did: Refactor this to check if the database holds any records or not. If the DB is empty,
   // we need to retrieve the JSON and process it.
   // If the DB has data already, we'll load up the data (sorted!), and then hand off control to the View.
   Article.fetchAll = function(next) {
