@@ -41,17 +41,16 @@
     );
   };
 
-
   // TODO: Insert an article instance into the database:
   Article.prototype.insertRecord = function(callback) {
     webDB.execute(
       [
         {
-          'sql': '...;',
-          'data': [],
+          'sql': 'INSERT INTO articles (title,category,author,authorUrl,publishedOn,body) VALUES (?,?,?,?,?,?);',
+          'data': [this.title,this.category,this.author,this.authorUrl,this.publishedOn,this.body],
         }
       ],
-      callback
+         callback
     );
   };
 
@@ -60,7 +59,8 @@
     webDB.execute(
       [
         {
-          /* ... */
+          'sql' : 'DELETE FROM articles WHERE id =? ;',
+          'data':[this.id];
         }
       ],
       callback
@@ -88,22 +88,22 @@
   // we need to retrieve the JSON and process it.
   // If the DB has data already, we'll load up the data (sorted!), and then hand off control to the View.
   Article.fetchAll = function(next) {
-    webDB.execute('', function(rows) {
-      if (rows.length) {
+    webDB.execute('SELECT * FROM articles', function(rows) {
+      if (rows.length > 0) {
         // Now instanitate those rows with the .loadAll function, and pass control to the view.
-
+        Article.loadAll(rows);
       } else {
         $.getJSON('/data/hackerIpsum.json', function(rawData) {
           // Cache the json, so we don't need to request it next time:
           rawData.forEach(function(item) {
             var article = new Article(item); // Instantiate an article based on item from JSON
             // Cache the newly-instantiated article in DB:
-
+            article.insertRecord();
           });
           // Now get ALL the records out the DB, with their database IDs:
-          webDB.execute('', function(rows) {
+          webDB.execute('SELECT * FROM articles ', function(rows) {
             // Now instanitate those rows with the .loadAll function, and pass control to the view.
-
+              Article.loadAll(rows);
           });
         });
       }
