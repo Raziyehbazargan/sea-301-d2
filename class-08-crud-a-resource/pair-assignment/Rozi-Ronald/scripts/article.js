@@ -30,11 +30,14 @@
     );
   };
 
-  // TODO: Correct the SQL to delete all records from the articles table.
+  // did: Correct the SQL to delete all records from the articles table.
   Article.truncateTable = function(callback) {
     webDB.execute(
-      'DELETE ...;',
-      callback
+      'DELETE FROM articles;',
+      function(result) {
+        console.log('Successfully  delete all rows',result);
+        if(callback) callback();
+      }
     );
   };
 
