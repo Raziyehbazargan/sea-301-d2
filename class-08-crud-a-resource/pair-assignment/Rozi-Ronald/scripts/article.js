@@ -21,11 +21,11 @@
 
   // did: Set up a DB table for articles.
   Article.createTable = function(callback) {
-    webDB.execute(
-      'CREATE TABLE IF NOT EXISTS articles (id INTEGER PRIMARY KEY AUTOINCREMENT,title VARCHAR(100), category VARCHAR(150) ,author VARCHAR(50),authorUrl TEXT,publishedOn TIME,body TEXT);',
+    webDB.execute(  // WEBDB (SQL , CALL BACK FUNCTION)
+      'CREATE TABLE IF NOT EXISTS articles (title VARCHAR(100), category VARCHAR(150) ,author VARCHAR(50) NOT NULL,authorUrl TEXT,publishedOn DATETIME,body TEXT);',
       function(result) {
         console.log('Successfully set up the articles table.', result);
-        if (callback) callback();
+        if (callback) callback(); // becuz we want to see what run we create a call abck function-it's a clousre   /// if (callback) is not undefined then run callback()
       }
     );
   };
@@ -34,10 +34,7 @@
   Article.truncateTable = function(callback) {
     webDB.execute(
       'DELETE FROM articles;',
-      function(result) {
-        console.log('Successfully  delete all rows',result);
-        if(callback) callback();
-      }
+       callback   // IS JUST A variable  and don't return anything --nothing happen after delete so we don't have callback function ... check webDB library
     );
   };
 
@@ -50,7 +47,7 @@
           'data': [this.title,this.category,this.author,this.authorUrl,this.publishedOn,this.body],
         }
       ],
-         callback
+      callback
     );
   };
 
@@ -59,8 +56,8 @@
     webDB.execute(
       [
         {
-          'sql' : 'DELETE FROM articles WHERE id = "'+ this.id +'" ;',
-          // 'data':[this.id],
+          'sql' : 'DELETE FROM articles WHERE id = (?) ;',
+          'data':[this.id],
         }
       ],
       callback
@@ -90,13 +87,14 @@
   // If the DB has data already, we'll load up the data (sorted!), and then hand off control to the View.
   Article.fetchAll = function(next) {
     webDB.execute('SELECT * FROM articles', function(rows) {
-      if (rows.length > 0) {
+      if (rows.length) {
         // Now instanitate those rows with the .loadAll function, and pass control to the view.
         Article.loadAll(rows);
-        next(); //
+        next(); //      Article.fetchAll(articleView.initIndexPage);
       } else {
         $.getJSON('/data/hackerIpsum.json', function(rawData) {
           // Cache the json, so we don't need to request it next time:
+          localStorage.rawData = JSON.stringify(rawData);
           rawData.forEach(function(item) {
             var article = new Article(item); // Instantiate an article based on item from JSON
             // Cache the newly-instantiated article in DB:
@@ -105,8 +103,8 @@
           // Now get ALL the records out the DB, with their database IDs:
           webDB.execute('SELECT * FROM articles ', function(rows) {
             // Now instanitate those rows with the .loadAll function, and pass control to the view.
-              Article.loadAll(rows);
-              next();
+            Article.loadAll(rows);
+            next();
           });
         });
       }
