@@ -59,8 +59,8 @@
     webDB.execute(
       [
         {
-          'sql' : 'DELETE FROM articles WHERE id =? ;',
-          'data':[this.id],
+          'sql' : 'DELETE FROM articles WHERE id = "'+ this.id +'" ;',
+          // 'data':[this.id],
         }
       ],
       callback
@@ -70,10 +70,10 @@
   // did: Update an article instance, overwriting it's properties into the corresponding record in the database:
   Article.prototype.updateRecord = function(callback) {
     webDB.execute(
-      [
+      [{
         'sql':'UPDATE articles SET author = ?  WHERE id = ?;',
         'data':[this.author , this.id],
-      ],
+      }],
       callback
     );
   };
@@ -93,6 +93,7 @@
       if (rows.length > 0) {
         // Now instanitate those rows with the .loadAll function, and pass control to the view.
         Article.loadAll(rows);
+        next(); //
       } else {
         $.getJSON('/data/hackerIpsum.json', function(rawData) {
           // Cache the json, so we don't need to request it next time:
@@ -105,6 +106,7 @@
           webDB.execute('SELECT * FROM articles ', function(rows) {
             // Now instanitate those rows with the .loadAll function, and pass control to the view.
               Article.loadAll(rows);
+              next();
           });
         });
       }
