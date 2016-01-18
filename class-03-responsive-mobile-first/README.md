@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Assignment for Class 3 - Responsive Design
+=======
+# Class 3 - Mobile-First / Responsive Design and SMACSS
+>>>>>>> ce0ff4465b2fa73e823b26b90601ae554bbfc678
 
 Let's develop some responsive super-powers. Follow along with these user stories to make sure your blog looks good on any sized device.
 
