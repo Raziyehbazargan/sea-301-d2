@@ -56,7 +56,7 @@ Article.fetchAll = function() {
     $.ajax({   //loking for JSON object
       type: 'HEAD',  //because we just head of data and dont use get because get get all content of data
       url:'/data/hackerIpsum.json',
-      success:function(data,xhr){
+      success:function(data,message,xhr){
         console.log(xhr);  // want to see what you are getting back from the server?
         var eTag = xhr.getResponseHeader('eTag');
         console.log(eTag);
