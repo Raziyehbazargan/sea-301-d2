@@ -3,7 +3,7 @@
 
   // DONE: Private methods declared here live only within the scope of the wrapping IIFE.
   var ui = function() {
-    var $about = $('#about'); // Best practice: Cache the DOM query if it's used more than once.
+    var $portfolio = $('#portfolio'); // Best practice: Cache the DOM query if it's used more than once.
 
     $about.find('ul').empty();
     $about.show().siblings().hide();
