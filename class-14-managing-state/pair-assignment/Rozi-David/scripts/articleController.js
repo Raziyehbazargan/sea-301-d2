@@ -38,7 +38,7 @@
     //comment: findWhere is a method with a function that has 3 parameters(field,value and callback function)
     //in this part Article.findWhere() return data base on category filed from database and then if
     //category = ctx.params.categoryName ( that is value of category and give it from part of url like '/category/:categoryName' )
-    //and return return the callback function (categoryData) that this function set the ctx(context).allArticles
+    //and return the callback function (categoryData) that this function set the ctx(context).allArticles
     //property  = articlesInCategory
     Article.findWhere('category', ctx.params.categoryName, categoryData);
   };

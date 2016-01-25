@@ -54,7 +54,7 @@
   // which simply redirects to a url like: /category/skateboarding or /author/Kevin+Bacon
   //comment: define a event listener on a part of page with id #filters
   //on each change on select tag run a function that in that function define a variable named resource. with any change on option in select tag  get the option id and replace the id from (-filter to empty string) and store in resource variable.
-  //and then call page()  and in page() if there is any space in val of that option replace that with a +: example: page(/author/xxxx+yy+yy)
+  //and then call page()  and in page() if there is any space in val of that option replace that with a +: example: page(/author/xxxx+yy+yy) 
   articleView.handleFilters = function() {
     $('#filters').on('change', 'select', function() {
       resource = this.id.replace('-filter', '');
